@@ -865,6 +865,129 @@
 
 
 
+
+
+    <!-- CREDENTIALS SECTION: RETRO PIXEL OS -->
+    <section id="credentials" class="py-24 px-4 bg-neo-white border-t-4 border-black font-mono">
+        <div class="max-w-5xl mx-auto">
+
+            <!-- Arcade Header -->
+            <div class="mb-12 text-center relative reveal">
+                <h2 class="text-5xl md:text-9xl font-black uppercase tracking-tighter"
+                    style="color: #E0F8D0; -webkit-text-stroke: 3px black; text-shadow: 4px 4px 0px #000, 8px 8px 0px #000, 12px 12px 0px #000;">
+                    CREDENTIALS
+                </h2>
+                <div class="mt-4 flex justify-center items-center gap-2">
+                    <div class="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                    <span class="text-sm font-bold bg-black text-white px-2 py-1">/// INSERT_COIN_TO_VIEW</span>
+                </div>
+            </div>
+
+            <!-- Retro Monitor Frame -->
+            <div class="bg-[#2D332D] p-4 md:p-8 rounded-xl border-4 border-black shadow-hard-xl relative">
+                <!-- Power LED -->
+                <div
+                    class="absolute bottom-4 right-8 w-4 h-4 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.8)]">
+                </div>
+
+                <!-- Screen Container -->
+                <div
+                    class="bg-[#E0F8D0] p-8 md:p-12 border-4 border-[#1A1A1A] rounded-lg min-h-[400px] relative overflow-hidden font-mono text-[#2D332D]">
+                    <!-- Scanline Overlay -->
+                    <div
+                        class="absolute inset-0 pointer-events-none opacity-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_4px,6px_100%]">
+                    </div>
+
+                    <!-- OS Header -->
+                    <div class="flex justify-between border-b-2 border-[#2D332D] pb-2 mb-8 opacity-70">
+                        <span>SYSTEM_READY...</span>
+                        <span>MEM: 64KB OK</span>
+                    </div>
+
+                    <!-- Desktop Icons Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative z-20">
+
+                        <!-- Icon 1: EDUCATION (Clickable) -->
+                        <div class="group flex flex-col items-center gap-3 cursor-pointer"
+                            onclick="document.getElementById('eduModal').classList.add('active')">
+                            <div
+                                class="w-20 h-20 md:w-24 md:h-24 relative transition-transform group-hover:-translate-y-2">
+                                <!-- Pixel Folder SVG -->
+                                <svg viewBox="0 0 24 24" fill="currentColor"
+                                    class="w-full h-full drop-shadow-[4px_4px_0_rgba(45,51,45,0.4)]">
+                                    <path
+                                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
+                                    <!-- Detail: Tab Line -->
+                                    <path d="M4 8h16v2H4z" fill-opacity="0.3" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-xs md:text-sm font-bold tracking-widest bg-[#2D332D] text-[#E0F8D0] px-2 py-1">EDUCATION</span>
+                        </div>
+
+                        <!-- Icon 2: CERTIFICATIONS -->
+                        <div class="group flex flex-col items-center gap-3 cursor-pointer"
+                            onclick="alert('Loading CERTS.DAT...')">
+                            <div
+                                class="w-20 h-20 md:w-24 md:h-24 relative transition-transform group-hover:-translate-y-2">
+                                <svg viewBox="0 0 24 24" fill="currentColor"
+                                    class="w-full h-full drop-shadow-[4px_4px_0_rgba(45,51,45,0.4)]">
+                                    <path
+                                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
+                                    <path d="M4 8h16v2H4z" fill-opacity="0.3" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-xs md:text-sm font-bold tracking-widest group-hover:bg-[#2D332D] group-hover:text-[#E0F8D0] px-2 py-1 transition-colors">CERTS</span>
+                        </div>
+
+                        <!-- Icon 3: RESEARCH -->
+                        <div class="group flex flex-col items-center gap-3 cursor-pointer"
+                            onclick="alert('Accessing RESEARCH.LOG...')">
+                            <div
+                                class="w-20 h-20 md:w-24 md:h-24 relative transition-transform group-hover:-translate-y-2">
+                                <svg viewBox="0 0 24 24" fill="currentColor"
+                                    class="w-full h-full drop-shadow-[4px_4px_0_rgba(45,51,45,0.4)]">
+                                    <path
+                                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
+                                    <path d="M4 8h16v2H4z" fill-opacity="0.3" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-xs md:text-sm font-bold tracking-widest group-hover:bg-[#2D332D] group-hover:text-[#E0F8D0] px-2 py-1 transition-colors">RESEARCH</span>
+                        </div>
+
+                        <!-- Icon 4: PATENT -->
+                        <div class="group flex flex-col items-center gap-3 cursor-pointer"
+                            onclick="alert('Decrypting PATENT.KEY...')">
+                            <div
+                                class="w-20 h-20 md:w-24 md:h-24 relative transition-transform group-hover:-translate-y-2">
+                                <svg viewBox="0 0 24 24" fill="currentColor"
+                                    class="w-full h-full drop-shadow-[4px_4px_0_rgba(45,51,45,0.4)]">
+                                    <path
+                                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
+                                    <path d="M4 8h16v2H4z" fill-opacity="0.3" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-xs md:text-sm font-bold tracking-widest group-hover:bg-[#2D332D] group-hover:text-[#E0F8D0] px-2 py-1 transition-colors">PATENT</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Trash / System Icons (Optional Decoration) -->
+                    <div class="absolute bottom-4 right-4 flex flex-col items-center gap-2 opacity-60">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12">
+                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
+                        </svg>
+                        <span class="text-[10px] tracking-widest">TRASH</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="py-24 px-4 max-w-5xl mx-auto">
         <div class="bg-white border-4 border-black shadow-hard-xl p-8 md:p-12 relative reveal mt-12">
             <div
@@ -977,6 +1100,89 @@
             BRUTAL
         </div>
     </footer>
+
+
+    <!-- EDUCATION MODAL: GRID SCHEDULE THEME -->
+    <div id="eduModal"
+        class="project-modal fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+        onclick="if(event.target === this) this.classList.remove('active')">
+        <div
+            class="bg-[#FFFDF5] w-full max-w-3xl border-4 border-black shadow-[8px_8px_0_rgba(0,0,0,1)] transform scale-95 transition-transform duration-200">
+
+            <!-- Window Header -->
+            <div class="bg-black text-white p-2 flex justify-between items-center border-b-4 border-black">
+                <span class="font-mono font-bold tracking-widest pl-2">ACADEMIC_RECORD.DAT</span>
+                <button id="closeEduModal"
+                    class="w-6 h-6 bg-red-500 hover:bg-red-600 border-2 border-white flex items-center justify-center"
+                    onclick="document.getElementById('eduModal').classList.remove('active')">
+                    <svg viewBox="0 0 10 10" class="w-3 h-3 text-white fill-current">
+                        <path d="M1 1l8 8m0-8l-8 8" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Grid Content (Schedule Style) -->
+            <div class="font-mono text-black">
+
+                <!-- Header Row -->
+                <div class="grid grid-cols-[100px_1fr] border-b-2 border-black bg-gray-100">
+                    <div class="p-4 border-r-2 border-black font-black text-sm">TIMELINE</div>
+                    <div class="p-4 font-black text-sm">COURSE DETAILS</div>
+                </div>
+
+                <!-- Row 1: B.Tech -->
+                <div
+                    class="grid grid-cols-1 md:grid-cols-[120px_1fr] border-b-2 border-black group hover:bg-neo-yellow/10 transition-colors">
+                    <div class="p-6 border-r-2 border-black font-bold text-sm md:text-base flex items-start pt-7">
+                        2021<br>- 2025
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-black uppercase mb-1">Bachelor of Technology</h3>
+                        <div class="text-sm font-bold text-gray-600 mb-4">Computer Science • L J University</div>
+                        <ul class="list-disc list-inside space-y-2 text-sm md:text-base">
+                            <li><strong>Specialization:</strong> Full Stack Development & AI.</li>
+                            <li><strong>Lead Developer:</strong> University Tech Fest '23.</li>
+                            <li><strong>CGPA:</strong> 8.5 / 10.0</li>
+                            <li><strong>Thesis:</strong> "Automated Stock Analysis Systems".</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Row 2: HSC -->
+                <div class="grid grid-cols-1 md:grid-cols-[120px_1fr] group hover:bg-neo-green/10 transition-colors">
+                    <div class="p-6 border-r-2 border-black font-bold text-sm md:text-base flex items-start pt-7">
+                        2019<br>- 2021
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-black uppercase mb-1">Higher Secondary</h3>
+                        <div class="text-sm font-bold text-gray-600 mb-4">Science (PCM) • Alpha High School</div>
+                        <ul class="list-disc list-inside space-y-2 text-sm md:text-base">
+                            <li><strong>Focus:</strong> Mathematics & Computer Science.</li>
+                            <li><strong>Achievement:</strong> District Coding Champion.</li>
+                            <li><strong>Grade:</strong> A+ (Distinction).</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer Status Bar -->
+            <div class="bg-gray-200 border-t-4 border-black p-2 text-xs font-mono text-center">
+                STATUS: DEGREE_COMPLETED // READY_FOR_WORK
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #eduModal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #eduModal.active>div {
+            transform: scale(100%);
+        }
+    </style>
 
     <script>
         // Custom Cursor Logic
