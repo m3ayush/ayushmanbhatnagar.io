@@ -5,65 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- SEO Meta Tags -->
-    <meta name="description"
-        content="Arham | Professional Full Stack Developer specializing in high-performance NeoBrutalist web experiences. Let's build the future with raw aesthetics.">
-    <meta name="keywords"
-        content="Arham, Full Stack Developer, NeoBrutalist, Portfolio, Web Development, UI/UX, Javascript, React">
-    <meta name="author" content="Arham">
-    <link rel="canonical" href="https://arham-portfolio-v2.netlify.app/">
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://arham-portfolio-v2.netlify.app/">
-    <meta property="og:title" content="ARHAM | Full Stack Brutalist">
-    <meta property="og:description"
-        content="Professional Full Stack Developer specializing in high-performance NeoBrutalist web experiences.">
-    <meta property="og:image" content="https://arham-portfolio-v2.netlify.app/Assets/images/og-image.png">
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://arham-portfolio-v2.netlify.app/">
-    <meta property="twitter:title" content="ARHAM | Full Stack Brutalist">
-    <meta property="twitter:description"
-        content="Professional Full Stack Developer specializing in high-performance NeoBrutalist web experiences.">
-    <meta property="twitter:image" content="https://arham-portfolio-v2.netlify.app/Assets/images/og-image.png">
-
-    <!-- Google Tag Manager -->
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-TLNG322R');</script>
-    <!-- End Google Tag Manager -->
-    <title>ARHAM | Full Stack Brutalist</title>
-
-    <!-- Theme & Performance -->
-    <meta name="theme-color" content="#121212">
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Space+Grotesk:wght@800&display=swap"
-        as="style">
-
-    <!-- JSON-LD Structured Data for Search Engines -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Arham",
-      "url": "https://arham-portfolio-v2.netlify.app/",
-      "jobTitle": "Full Stack Developer",
-      "image": "https://arham-portfolio-v2.netlify.app/Assets/images/logo.png",
-      "knowsAbout": ["React", "Python", "Java", "Node.js", "Django", "Three.js", "UI/UX Design", "NeoBrutalist Design"],
-      "sameAs": [
-        "https://github.com/Arham43-ops",
-        "https://leetcode.com/u/arham43-ops/"
-      ],
-      "description": "Professional Full Stack Developer specializing in high-performance NeoBrutalist web experiences. Let's build the future with raw aesthetics."
-    }
-    </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -1065,20 +1007,27 @@
                     </div>
                 </div>
 
-                <form class="space-y-6 bg-gray-50 p-6 border-2 border-black">
+                <form action="https://formsubmit.co/4e47cd112bd6537c5147b85f52eb4498" method="POST"
+                    class="space-y-6 bg-gray-50 p-6 border-2 border-black">
+                    <!-- FormSubmit Configuration -->
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_subject" value="New Portfolio Contact!">
+                    <input type="hidden" name="_next" value="#">
+
                     <div class="flex flex-col">
                         <label class="font-mono font-bold mb-1 uppercase text-xs">Identity</label>
-                        <input type="text" placeholder="NAME / COMPANY"
+                        <input type="text" name="name" placeholder="NAME / COMPANY" required
                             class="bg-white border-2 border-black p-3 font-bold focus:outline-none focus:bg-neo-yellow focus:shadow-hard-sm transition-all cursor-hover">
                     </div>
                     <div class="flex flex-col">
                         <label class="font-mono font-bold mb-1 uppercase text-xs">Coordinates</label>
-                        <input type="email" placeholder="EMAIL ADDRESS"
+                        <input type="email" name="email" placeholder="EMAIL ADDRESS" required
                             class="bg-white border-2 border-black p-3 font-bold focus:outline-none focus:bg-neo-yellow focus:shadow-hard-sm transition-all cursor-hover">
                     </div>
                     <div class="flex flex-col">
                         <label class="font-mono font-bold mb-1 uppercase text-xs">Transmission</label>
-                        <textarea rows="4" placeholder="PROJECT DETAILS..."
+                        <textarea name="message" rows="4" placeholder="PROJECT DETAILS..." required
                             class="bg-white border-2 border-black p-3 font-bold focus:outline-none focus:bg-neo-yellow focus:shadow-hard-sm transition-all resize-none cursor-hover"></textarea>
                     </div>
                     <button type="submit"
