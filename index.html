@@ -457,7 +457,10 @@
         .cert-detail { min-width: 0; padding: 20px; }
         .cert-detail h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 22px; line-height: 1.25; }
         .cert-meta { font-size: 11px; margin: 8px 0 16px; }
-        .cert-preview { width: 100%; height: min(48vh, 470px); object-fit: contain; background: #eee; border: 2px solid #121212; }
+        .cert-preview-frame { position: relative; height: min(48vh, 470px); background: #eee; border: 2px solid #121212; }
+        .cert-preview { width: 100%; height: 100%; object-fit: contain; }
+        .preview-status { position: absolute; inset: 0; display: grid; place-items: center; font: 12px 'JetBrains Mono', monospace; color: #777; }
+        .preview-status[hidden] { display: none; }
         .cert-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; font-size: 11px; }
         .cert-original { padding: 10px 14px; border: 2px solid #121212; background: #FBFF48; font-weight: 800; box-shadow: 3px 3px 0 #121212; }
         #certModal button:focus-visible, #certModal a:focus-visible, #openCerts:focus-visible { outline: 3px solid #3B82F6; outline-offset: 4px; }
@@ -468,7 +471,7 @@
             .cert-option { flex: 1; min-width: 0; padding: 8px; font-size: 11px; margin: 0; }
             .cert-detail { padding: 14px; }
             .cert-detail h3 { font-size: 19px; }
-            .cert-preview { height: auto; max-height: 42vh; }
+            .cert-preview-frame { height: auto; aspect-ratio: 4 / 3; max-height: 42vh; }
         }
     </style>
 </head>
@@ -879,7 +882,8 @@
             </div>
             <div class="project-modal-body p-0">
                 <div class="relative h-[160px] sm:h-[220px] bg-black border-b-4 border-black group overflow-hidden">
-                    <img id="modalImage" src="" alt="Project Preview"
+                    <span class="preview-status" id="projectImageStatus" role="status" hidden></span>
+                    <img id="modalImage" alt="Project Preview"
                         class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300">
 
                 </div>
@@ -932,7 +936,10 @@
             <article class="cert-detail" aria-live="polite">
                 <h3 id="certName"></h3>
                 <p class="cert-meta" id="certMeta"></p>
-                <img class="cert-preview" id="certPreview" alt="">
+                <div class="cert-preview-frame">
+                    <span class="preview-status" id="certImageStatus" role="status" hidden></span>
+                    <img class="cert-preview" id="certPreview" alt="">
+                </div>
                 <footer class="cert-footer">
                     <span id="certPosition">01 / 03</span>
                     <a class="cert-original" id="certOriginal" target="_blank" rel="noopener noreferrer">OPEN ORIGINAL ↗</a>
@@ -996,7 +1003,7 @@
                                 </svg>
                             </div>
                             <span
-                                class="text-xs md:text-sm font-bold tracking-widest bg-[#2D332D] text-[#E0F8D0] px-2 py-1">EDUCATION</span>
+                                class="text-xs md:text-sm font-bold tracking-widest group-hover:bg-[#2D332D] group-hover:text-[#E0F8D0] px-2 py-1 transition-colors">EDUCATION</span>
                         </div>
 
                         <!-- Icon 2: CERTIFICATIONS -->
@@ -1320,6 +1327,30 @@
         };
 
 
+        // Hide the previous bitmap immediately; only the latest selection may reveal it.
+        const previewRequests = new WeakMap();
+        async function loadPreview(imageId, statusId, source, alt) {
+            const image = document.getElementById(imageId);
+            const status = document.getElementById(statusId);
+            const request = {};
+            previewRequests.set(image, request);
+            image.style.visibility = 'hidden';
+            image.removeAttribute('src');
+            image.alt = alt;
+            status.textContent = 'Loading preview…';
+            status.hidden = false;
+            image.src = source;
+            try {
+                await image.decode();
+                if (previewRequests.get(image) !== request) return;
+                image.style.visibility = 'visible';
+                status.hidden = true;
+            } catch {
+                if (previewRequests.get(image) !== request) return;
+                status.textContent = 'Preview unavailable';
+            }
+        }
+
         const certificates = [
             { title: 'AWS Certified Cloud Practitioner', issuer: 'Amazon Web Services', date: '20 Apr 2026', preview: 'aws-cloud-practitioner.png', file: 'AWS Certified Cloud Practitioner certificate.pdf' },
             { title: 'AWS Certified AI Practitioner', issuer: 'Amazon Web Services', date: '19 Apr 2026', preview: 'aws-ai-practitioner.png', file: 'AWS Certified AI Practitioner certificate.pdf' },
@@ -1331,8 +1362,7 @@
             const base = 'Assets/images/cert/';
             document.getElementById('certName').textContent = cert.title;
             document.getElementById('certMeta').textContent = cert.issuer + ' · Issued ' + cert.date;
-            document.getElementById('certPreview').src = base + encodeURIComponent(cert.preview);
-            document.getElementById('certPreview').alt = cert.title + ' certificate awarded to Ayushman Bhatnagar';
+            loadPreview('certPreview', 'certImageStatus', base + encodeURIComponent(cert.preview), cert.title + ' certificate awarded to Ayushman Bhatnagar');
             document.getElementById('certOriginal').href = base + encodeURIComponent(cert.file);
             document.getElementById('certPosition').textContent = String(index + 1).padStart(2, '0') + ' / 03';
             certDialog.querySelectorAll('[data-cert]').forEach(button => {
@@ -1447,7 +1477,7 @@
         function openProjectModal(project) {
             const title = shortenProjectText(project.title, PROJECT_CONTENT_LIMITS.title);
             document.getElementById('modalTitle').textContent = shortenProjectText(project.shortTitle || title, PROJECT_CONTENT_LIMITS.folder).toUpperCase() + '.exe';
-            document.getElementById('modalImage').src = project.image;
+            loadPreview('modalImage', 'projectImageStatus', project.image, project.title + ' preview');
             document.getElementById('modalHeading').textContent = title;
             document.getElementById('modalDesc').textContent = shortenProjectText(project.desc, PROJECT_CONTENT_LIMITS.description);
             document.querySelector('.project-modal-body').scrollTop = 0;
