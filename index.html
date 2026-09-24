@@ -63,6 +63,16 @@
             background-size: 40px 40px, 100px 100px, 100px 100px;
         }
 
+        /* Dark dotted texture for the experience log. */
+        #experience {
+            background-color: #171719;
+            background-image:
+                radial-gradient(circle, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+                repeating-linear-gradient(135deg, transparent 0, transparent 11px,
+                    rgba(255, 255, 255, 0.018) 11px, rgba(255, 255, 255, 0.018) 12px);
+            background-size: 20px 20px, 24px 24px;
+        }
+
         /* Custom Cursor */
         #cursor {
             pointer-events: none;
@@ -349,6 +359,28 @@
             transform: translateY(0);
         }
 
+        #projectModal .finder-header {
+            flex-shrink: 0;
+        }
+
+        #modalTitle {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        #projectModal .finder-controls {
+            flex-shrink: 0;
+        }
+
+        .project-modal-body {
+            min-height: 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            overflow-wrap: anywhere;
+        }
+
         .bg-dark-grid {
             background-color: #041716;
             background-image:
@@ -388,6 +420,55 @@
             background: #FBFF48;
             border: 2px solid #121212;
             border-radius: 50%;
+        }
+
+
+        /* One shared column definition keeps every academic divider aligned. */
+        #eduModal .education-row { display: grid; grid-template-columns: 120px minmax(0, 1fr); }
+        #eduModal .education-row > div { min-width: 0; overflow-wrap: anywhere; }
+        #eduModal > div { max-height: 90vh; max-height: 90dvh; overflow-y: auto; }
+        @media (max-width: 640px) {
+            #eduModal .education-row { grid-template-columns: 100px minmax(0, 1fr); }
+            #eduModal .education-row > div { padding: 16px 12px; }
+        }
+
+        /* Minimal certificate file viewer */
+        #certModal {
+            margin: auto; padding: 0; width: min(1080px, calc(100% - 32px));
+            max-height: 90vh; max-height: 90dvh; color: #121212;
+            background: #FFFDF5; border: 4px solid #121212;
+            box-shadow: 8px 8px 0 #000; font-family: 'JetBrains Mono', monospace;
+        }
+        #certModal::backdrop { background: rgb(0 0 0 / 80%); }
+        #certModal, #certModal::backdrop { cursor: auto; }
+        #certModal button, #certModal a { cursor: pointer; }
+        .cert-header { display: flex; align-items: center; justify-content: space-between;
+            gap: 16px; padding: 12px 16px; border-bottom: 3px solid #121212; background: #121212; color: #fff; }
+        .cert-header h2 { font-size: 14px; font-weight: 800; }
+        .cert-close { width: 32px; height: 32px; border: 2px solid #fff; background: #FF2A2A; color: #fff; font-weight: 800; }
+        .cert-layout { display: grid; grid-template-columns: 230px minmax(0, 1fr); }
+        .cert-list { padding: 16px; border-right: 2px solid #121212; }
+        .cert-list-label { font-size: 11px; margin-bottom: 14px; opacity: .65; }
+        .cert-option { width: 100%; text-align: left; padding: 12px; border: 2px solid transparent;
+            margin-bottom: 8px; font-size: 13px; line-height: 1.5; }
+        .cert-option span { display: block; font-size: 10px; margin-bottom: 4px; }
+        .cert-option[aria-pressed="true"] { border-color: #121212; background: #E0F8D0; box-shadow: 3px 3px 0 #121212; }
+        .cert-option:hover { background: #E0F8D0; }
+        .cert-detail { min-width: 0; padding: 20px; }
+        .cert-detail h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 22px; line-height: 1.25; }
+        .cert-meta { font-size: 11px; margin: 8px 0 16px; }
+        .cert-preview { width: 100%; height: min(48vh, 470px); object-fit: contain; background: #eee; border: 2px solid #121212; }
+        .cert-footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 16px; font-size: 11px; }
+        .cert-original { padding: 10px 14px; border: 2px solid #121212; background: #FBFF48; font-weight: 800; box-shadow: 3px 3px 0 #121212; }
+        #certModal button:focus-visible, #certModal a:focus-visible, #openCerts:focus-visible { outline: 3px solid #3B82F6; outline-offset: 4px; }
+        @media (max-width: 640px) {
+            .cert-layout { grid-template-columns: 1fr; }
+            .cert-list { border-right: 0; border-bottom: 2px solid #121212; padding: 12px; display: flex; gap: 8px; }
+            .cert-list-label { display: none; }
+            .cert-option { flex: 1; min-width: 0; padding: 8px; font-size: 11px; margin: 0; }
+            .cert-detail { padding: 14px; }
+            .cert-detail h3 { font-size: 19px; }
+            .cert-preview { height: auto; max-height: 42vh; }
         }
     </style>
 </head>
@@ -669,62 +750,61 @@
                     <div class="text-white group-hover:text-black font-black font-display text-xl uppercase">Jupyter
                     </div>
                 </div>
+
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-white transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ FRAMEWORK</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-xl uppercase">Next.js</div>
+                </div>
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-neo-green transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ BACKEND</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-xl uppercase">REST APIs</div>
+                </div>
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-neo-orange transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ DEVOPS</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-xl uppercase">CI/CD</div>
+                </div>
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-neo-purple transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ AI/LLM</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-xl uppercase">Generative AI</div>
+                </div>
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-neo-green transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ AI/LLM</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-xl uppercase">RAG</div>
+                </div>
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-neo-blue transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ AI/LLM</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-base uppercase">Vector Embeddings</div>
+                </div>
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-neo-pink transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ AI/LLM</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-xl uppercase">Semantic Search</div>
+                </div>
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-neo-orange transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ AI/LLM</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-base uppercase">Prompt Engineering</div>
+                </div>
+                <div
+                    class="group w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6 xl:w-[12.5%] h-24 border-r-2 border-b-2 border-white/20 bg-neo-black hover:bg-white transition-all duration-0 hover:z-10 relative cursor-hover flex flex-col items-center justify-center p-2 text-center">
+                    <div class="text-neo-green group-hover:text-black font-mono text-xs mb-1 opacity-50">&gt;_ AI/LLM</div>
+                    <div class="text-white group-hover:text-black font-black font-display text-xl uppercase">LLM APIs</div>
+                </div>
             </div>
 
             <div class="border-t-4 border-white mt-8 pt-4 flex justify-between font-mono text-xs text-gray-500">
-                <span>TOTAL_NODES: 18</span>
+                <span>TOTAL_NODES: 27</span>
                 <span>MEMORY_USAGE: 128MB</span>
             </div>
         </div>
     </section>
 
-    <section id="experience" class="py-24 px-4 max-w-7xl mx-auto">
-        <h2 class="text-5xl md:text-8xl font-black uppercase mb-12 tracking-tighter text-center">
-            Experience<span class="text-neo-red">_Log</span>
-        </h2>
-
-        <div class="relative border-l-4 border-black ml-4 md:ml-10 space-y-12">
-            <div class="reveal relative pl-8 md:pl-16">
-                <div class="absolute -left-[14px] top-2 w-6 h-6 bg-neo-orange border-4 border-black"></div>
-                <div class="bg-white border-4 border-black p-6 shadow-hard hover:shadow-hard-xl transition-all">
-                    <div
-                        class="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-dashed border-gray-300 pb-4 mb-4">
-                        <h3 class="text-3xl font-black uppercase">Freelance Full-Stack Developer</h3>
-                        <span class="font-mono font-bold bg-neo-black text-white px-2 py-1">Feb 2026 - PRESENT</span>
-                    </div>
-                    <p class="font-mono text-xl mb-2 text-neo-orange font-bold">@ SELF_EMPLOYED</p>
-                    <ul class="list-disc list-inside font-mono text-gray-700 space-y-1">
-                        <li>Building responsive and interactive web applications using HTML5, CSS3, and JavaScript</li>
-                        <li>Developing modern web applications using React, Node.js, Express.js and MongoDB</li>
-                        <li>Creating custom web solutions tailored to client requirements</li>
-                    </ul>
-                </div>
-            </div>
-
-
-
-
-            <div class="reveal relative pl-8 md:pl-16">
-                <div class="absolute -left-[14px] top-2 w-6 h-6 bg-neo-pink border-4 border-black"></div>
-                <div class="bg-white border-4 border-black p-6 shadow-hard hover:shadow-hard-xl transition-all">
-                    <div
-                        class="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-dashed border-gray-300 pb-4 mb-4">
-                        <h3 class="text-3xl font-black uppercase">Internship</h3>
-                        <span class="font-mono font-bold bg-neo-black text-white px-2 py-1">Jun 2024 - Jul 2024</span>
-                    </div>
-                    <p class="font-mono text-xl mb-2 text-neo-pink font-bold">@ Reliance Power Limited</p>
-                    <ul class="list-disc list-inside font-mono text-gray-700 space-y-1">
-                        <li>Gained practical exposure to large-scale coal mining workflows and heavy equipment
-                            operations, including draglines.</li>
-                        <li>Analyzed advanced safety instrumentation and monitoring systems designed to optimize
-                            efficiency in hazardous environments.</li>
-                        <li>Observed the application of Unity-based simulators for risk-free operator training and
-                            real-time equipment modeling.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
     <!-- CODING STATS SECTION -->
 
     <section id="projects" class="py-24 bg-dark-grid border-t-4 border-black px-4 overflow-hidden">
@@ -797,15 +877,15 @@
                 <div class="finder-title" id="modalTitle">Project_View.exe</div>
                 <div style="width: 50px;"></div>
             </div>
-            <div class="p-0 overflow-y-auto max-h-[calc(90vh-50px)]">
-                <div class="relative h-[250px] bg-black border-b-4 border-black group overflow-hidden">
+            <div class="project-modal-body p-0">
+                <div class="relative h-[160px] sm:h-[220px] bg-black border-b-4 border-black group overflow-hidden">
                     <img id="modalImage" src="" alt="Project Preview"
                         class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300">
 
                 </div>
-                <div class="p-8">
-                    <h3 class="text-4xl font-black uppercase mb-4" id="modalHeading">Project Title</h3>
-                    <p class="font-mono text-lg mb-6 leading-relaxed" id="modalDesc">Description goes here...</p>
+                <div class="p-5 sm:p-6">
+                    <h3 class="text-2xl sm:text-3xl font-black uppercase mb-4" id="modalHeading">Project Title</h3>
+                    <p class="font-mono text-base mb-6 leading-relaxed" id="modalDesc">Description goes here...</p>
 
                     <div class="mb-8">
                         <h4 class="font-bold font-mono text-sm uppercase text-gray-500 mb-2">Tech Stack:</h4>
@@ -814,7 +894,7 @@
                         </div>
                     </div>
 
-                    <div class="flex gap-4">
+                    <div class="flex flex-col sm:flex-row gap-4">
                         <a href="#" id="modalLink" target="_blank"
                             class="flex-1 bg-neo-green border-2 border-black p-4 text-center font-bold text-xl hover:bg-black hover:text-white transition-all shadow-hard cursor-hover">
                             VIEW PROJECT
@@ -836,6 +916,30 @@
 
 
 
+
+    <dialog id="certModal" aria-labelledby="certWindowTitle">
+        <header class="cert-header">
+            <h2 id="certWindowTitle">CERTIFICATES.DAT</h2>
+            <button type="button" class="cert-close" id="closeCerts" aria-label="Close certificates">×</button>
+        </header>
+        <div class="cert-layout">
+            <nav class="cert-list" aria-label="Certificates">
+                <p class="cert-list-label">3 FILES</p>
+                <button type="button" class="cert-option" data-cert="0" aria-pressed="true"><span>01 / AWS</span>Cloud Practitioner</button>
+                <button type="button" class="cert-option" data-cert="1" aria-pressed="false"><span>02 / AWS</span>AI Practitioner</button>
+                <button type="button" class="cert-option" data-cert="2" aria-pressed="false"><span>03 / SCALER</span>DBMS</button>
+            </nav>
+            <article class="cert-detail" aria-live="polite">
+                <h3 id="certName"></h3>
+                <p class="cert-meta" id="certMeta"></p>
+                <img class="cert-preview" id="certPreview" alt="">
+                <footer class="cert-footer">
+                    <span id="certPosition">01 / 03</span>
+                    <a class="cert-original" id="certOriginal" target="_blank" rel="noopener noreferrer">OPEN ORIGINAL ↗</a>
+                </footer>
+            </article>
+        </div>
+    </dialog>
 
     <!-- CREDENTIALS SECTION: RETRO PIXEL OS -->
     <section id="credentials" class="py-24 px-4 bg-neo-white border-t-4 border-black font-mono">
@@ -896,54 +1000,23 @@
                         </div>
 
                         <!-- Icon 2: CERTIFICATIONS -->
-                        <div class="group flex flex-col items-center gap-3 cursor-pointer"
-                            onclick="alert('Loading CERTS.DAT...')">
+                        <button type="button" id="openCerts" class="group flex flex-col items-center gap-3 cursor-pointer" aria-haspopup="dialog" aria-controls="certModal">
                             <div
                                 class="w-20 h-20 md:w-24 md:h-24 relative transition-transform group-hover:-translate-y-2">
                                 <svg viewBox="0 0 24 24" fill="currentColor"
                                     class="w-full h-full drop-shadow-[4px_4px_0_rgba(45,51,45,0.4)]">
                                     <path
-                                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
+                                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
                                     <path d="M4 8h16v2H4z" fill-opacity="0.3" />
                                 </svg>
                             </div>
                             <span
                                 class="text-xs md:text-sm font-bold tracking-widest group-hover:bg-[#2D332D] group-hover:text-[#E0F8D0] px-2 py-1 transition-colors">CERTS</span>
-                        </div>
+                        </button>
 
-                        <!-- Icon 3: RESEARCH -->
+                       
                         <div class="group flex flex-col items-center gap-3 cursor-pointer"
-                            onclick="alert('Accessing RESEARCH.LOG...')">
-                            <div
-                                class="w-20 h-20 md:w-24 md:h-24 relative transition-transform group-hover:-translate-y-2">
-                                <svg viewBox="0 0 24 24" fill="currentColor"
-                                    class="w-full h-full drop-shadow-[4px_4px_0_rgba(45,51,45,0.4)]">
-                                    <path
-                                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
-                                    <path d="M4 8h16v2H4z" fill-opacity="0.3" />
-                                </svg>
-                            </div>
-                            <span
-                                class="text-xs md:text-sm font-bold tracking-widest group-hover:bg-[#2D332D] group-hover:text-[#E0F8D0] px-2 py-1 transition-colors">RESEARCH</span>
-                        </div>
-
-                        <!-- Icon 4: PATENT -->
-                        <div class="group flex flex-col items-center gap-3 cursor-pointer"
-                            onclick="alert('Decrypting PATENT.KEY...')">
-                            <div
-                                class="w-20 h-20 md:w-24 md:h-24 relative transition-transform group-hover:-translate-y-2">
-                                <svg viewBox="0 0 24 24" fill="currentColor"
-                                    class="w-full h-full drop-shadow-[4px_4px_0_rgba(45,51,45,0.4)]">
-                                    <path
-                                        d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z" />
-                                    <path d="M4 8h16v2H4z" fill-opacity="0.3" />
-                                </svg>
-                            </div>
-                            <span
-                                class="text-xs md:text-sm font-bold tracking-widest group-hover:bg-[#2D332D] group-hover:text-[#E0F8D0] px-2 py-1 transition-colors">PATENT</span>
-                        </div>
-                        <div class="group flex flex-col items-center gap-3 cursor-pointer"
-                            onclick="alert('Decrypting PATENT.KEY...')">
+                            onclick="alert('Decrypting ACHIEVEMENTS.KEY...')">
                             <div
                                 class="w-20 h-20 md:w-24 md:h-24 relative transition-transform group-hover:-translate-y-2">
                                 <svg viewBox="0 0 24 24" fill="currentColor"
@@ -971,6 +1044,46 @@
             </div>
         </div>
     </section>
+
+
+        <!-- EXPERIENCE -->
+    <section id="experience" class="py-24 px-4 text-neo-white border-y-4 border-black">
+        <div class="max-w-7xl mx-auto">
+        <h2 class="text-5xl md:text-8xl font-black uppercase mb-12 tracking-tighter text-center">
+            Experience<span class="text-neo-red">_Log</span>
+        </h2>
+
+
+
+
+            <div class="reveal relative ml-3 pl-6 md:pl-12 border-l-2 border-neo-pink/40">
+                <div class="absolute -left-[14px] top-2 w-6 h-6 bg-neo-pink border-4 border-black"></div>
+                <div class="bg-[#202024] border-2 border-white/20 p-6 md:p-8 shadow-hard hover:border-neo-pink/60 hover:shadow-hard-xl transition-all">
+                    <div
+                        class="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-dashed border-white/20 pb-4 mb-4">
+                        <h3 class="text-3xl font-black uppercase">Internship</h3>
+                        <span class="font-mono font-bold bg-neo-black text-white px-2 py-1">Jun 2024 - Jul 2024</span>
+                    </div>
+                    <p class="font-mono text-xl mb-2 text-neo-pink font-bold">@ Reliance Power Limited</p>
+                    <ul class="list-disc list-inside font-mono text-gray-300 space-y-1">
+                        <li>
+    Gained practical exposure to large-scale coal mining operations and heavy equipment,
+    including draglines.
+</li>
+<li>
+    Studied advanced safety instrumentation and monitoring systems used to improve
+    operational efficiency in hazardous environments.
+</li>
+<li>
+    Observed the use of Unity-based simulators for risk-free operator training and
+    equipment simulation.
+</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <section id="contact" class="py-24 px-4 max-w-5xl mx-auto">
         <div class="bg-white border-4 border-black shadow-hard-xl p-8 md:p-12 relative reveal mt-12">
@@ -1097,14 +1210,14 @@
             <div class="font-mono text-black">
 
                 <!-- Header Row -->
-                <div class="grid grid-cols-[100px_1fr] border-b-2 border-black bg-gray-100">
+                <div class="education-row border-b-2 border-black bg-gray-100">
                     <div class="p-4 border-r-2 border-black font-black text-sm">TIMELINE</div>
                     <div class="p-4 font-black text-sm">COURSE DETAILS</div>
                 </div>
 
                 <!-- Row 1: B.Tech -->
                 <div
-                    class="grid grid-cols-1 md:grid-cols-[120px_1fr] border-b-2 border-black group hover:bg-neo-yellow/10 transition-colors">
+                    class="education-row border-b-2 border-black group hover:bg-neo-yellow/10 transition-colors">
                     <div class="p-6 border-r-2 border-black font-bold text-sm md:text-base flex items-start pt-7">
                         2023<br>- present
                     </div>
@@ -1120,7 +1233,7 @@
                 </div>
 
                 <!-- Row 2: HSC -->
-                <div class="grid grid-cols-1 md:grid-cols-[120px_1fr] group hover:bg-neo-green/10 transition-colors">
+                <div class="education-row group hover:bg-neo-green/10 transition-colors">
                     <div class="p-6 border-r-2 border-black font-bold text-sm md:text-base flex items-start pt-7">
                         2021<br>- 2023
                     </div>
@@ -1142,6 +1255,8 @@
             </div>
         </div>
     </div>
+
+    
 
     <style>
         #eduModal.active {
@@ -1204,9 +1319,78 @@
             document.getElementById("progressBar").style.width = scrolled + "%";
         };
 
+
+        const certificates = [
+            { title: 'AWS Certified Cloud Practitioner', issuer: 'Amazon Web Services', date: '20 Apr 2026', preview: 'aws-cloud-practitioner.png', file: 'AWS Certified Cloud Practitioner certificate.pdf' },
+            { title: 'AWS Certified AI Practitioner', issuer: 'Amazon Web Services', date: '19 Apr 2026', preview: 'aws-ai-practitioner.png', file: 'AWS Certified AI Practitioner certificate.pdf' },
+            { title: 'DBMS: Fundamentals & Advanced Concepts', issuer: 'Scaler Topics', date: '24 Mar 2025', preview: 'DBMS.png', file: 'DBMS.png' }
+        ];
+        const certDialog = document.getElementById('certModal');
+        function selectCertificate(index) {
+            const cert = certificates[index];
+            const base = 'Assets/images/cert/';
+            document.getElementById('certName').textContent = cert.title;
+            document.getElementById('certMeta').textContent = cert.issuer + ' · Issued ' + cert.date;
+            document.getElementById('certPreview').src = base + encodeURIComponent(cert.preview);
+            document.getElementById('certPreview').alt = cert.title + ' certificate awarded to Ayushman Bhatnagar';
+            document.getElementById('certOriginal').href = base + encodeURIComponent(cert.file);
+            document.getElementById('certPosition').textContent = String(index + 1).padStart(2, '0') + ' / 03';
+            certDialog.querySelectorAll('[data-cert]').forEach(button => {
+                button.setAttribute('aria-pressed', String(Number(button.dataset.cert) === index));
+            });
+        }
+        let certPreviousOverflow = '';
+        document.getElementById('openCerts').addEventListener('click', () => {
+            selectCertificate(0);
+            certPreviousOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+            certDialog.showModal();
+        });
+        document.getElementById('closeCerts').addEventListener('click', () => certDialog.close());
+        certDialog.addEventListener('close', () => {
+            document.body.style.overflow = certPreviousOverflow;
+            document.getElementById('openCerts').focus();
+        });
+        certDialog.addEventListener('click', event => {
+            const rect = certDialog.getBoundingClientRect();
+            if (event.target === certDialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom)) certDialog.close();
+        });
+        certDialog.querySelectorAll('[data-cert]').forEach(button => {
+            button.addEventListener('click', () => selectCertificate(Number(button.dataset.cert)));
+        });
+
         // --- FINDER WINDOW LOGIC ---
 
+        // Display limits apply automatically to every new project.
+        const PROJECT_CONTENT_LIMITS = { title: 60, description: 240, folder: 24 };
+
+        function shortenProjectText(value, limit) {
+            const text = String(value ?? '').trim().replace(/\s+/g, ' ');
+            if (text.length <= limit) return text;
+            const excerpt = text.slice(0, limit - 1);
+            const wordEnd = excerpt.lastIndexOf(' ');
+            return (wordEnd > 0 ? excerpt.slice(0, wordEnd) : excerpt).trimEnd() + '…';
+        }
+
         const projects = [
+            {
+                id: 'safarnama-ai',
+                title: 'Safarnama AI',
+                desc: 'Explore India through a 3D map, community stories, and photo posts. Plan trips with AI chat, source citations, personalised itineraries, and photo plausibility checks, plus profiles, likes, comments, and trip logs.',
+                tags: ['Next.js', 'TypeScript', 'Tailwind CSS', 'MapLibre GL', 'Firebase', 'Gemini API'],
+                link: '#',
+                repo: 'https://github.com/m3ayush/Safarnama.ai',
+                image: 'Assets/images/safarnama.png'
+            },
+            {
+                id: 'my-bookshelf',
+                title: 'My Bookshelf',
+                desc: 'An interactive 3D library for readers to organize and showcase their books. Search Google Books with an Open Library fallback, track reading status, add ratings and reviews, and explore reading statistics and progression levels. Includes browser-local storage and shareable reading recap cards with PNG downloads.',
+                tags: ['Next.js', 'TypeScript', 'React Three Fiber', 'GSAP', 'Tailwind CSS', 'Zustand'],
+                link: '#',
+                repo: 'https://github.com/m3ayush/Bookshelf_test',
+                image: 'Assets/images/my-bookshelf.png'
+            },
             {
                 id: 'insureensure',
                 title: 'Insure_Ensure',
@@ -1218,11 +1402,12 @@
             },
             {
                 id: 'emms',
-                title: 'EMMS',
-                desc: 'Developed a centralized React-based MoU Management System that digitizes the end-to-end lifecycle of 100+ institutional agreements with 100% document traceability and real-time authenticity verification.',
-                tags: ['React', 'MongoDB', 'Node.js', 'Express', 'Firebase'],
+                title: 'EMMS — MoU Management',
+                shortTitle: 'EMMS',
+                desc: 'Manage college agreements, upload signed PDFs, renew MoUs, and log collaborations. Admin dashboards track department statistics, inactive agreements, and upcoming expirations.',
+                tags: ['React', 'Tailwind CSS', 'Node.js', 'Express', 'MongoDB', 'Firebase Authentication'],
                 link: '#',
-                repo: '#',
+                repo: 'https://github.com/m3ayush/EMMS',
                 image: 'Assets/images/emms.png'
             },
             {
@@ -1252,7 +1437,7 @@
                         <div class="folder-tab"></div>
                         <div class="folder-body"></div>
                     </div>
-                     <span class="font-mono text-xs font-bold text-center mt-2 px-1 bg-white border border-transparent hover:border-black hover:bg-neo-yellow cursor-text selection:bg-black selection:text-white" style="max-width: 100px; word-wrap: break-word;">${project.title}</span>
+                     <span class="font-mono text-xs font-bold text-center mt-2 px-1 bg-white border border-transparent hover:border-black hover:bg-neo-yellow cursor-text selection:bg-black selection:text-white" style="white-space: nowrap;">${shortenProjectText(project.shortTitle || project.title, PROJECT_CONTENT_LIMITS.folder)}</span>
                 `;
                 projectGrid.appendChild(folder);
             });
@@ -1260,10 +1445,12 @@
 
         // Modal Logic
         function openProjectModal(project) {
-            document.getElementById('modalTitle').textContent = project.title.toUpperCase() + '.exe';
+            const title = shortenProjectText(project.title, PROJECT_CONTENT_LIMITS.title);
+            document.getElementById('modalTitle').textContent = shortenProjectText(project.shortTitle || title, PROJECT_CONTENT_LIMITS.folder).toUpperCase() + '.exe';
             document.getElementById('modalImage').src = project.image;
-            document.getElementById('modalHeading').textContent = project.title;
-            document.getElementById('modalDesc').textContent = project.desc;
+            document.getElementById('modalHeading').textContent = title;
+            document.getElementById('modalDesc').textContent = shortenProjectText(project.desc, PROJECT_CONTENT_LIMITS.description);
+            document.querySelector('.project-modal-body').scrollTop = 0;
             document.getElementById('modalLink').href = project.link;
             document.getElementById('modalRepo').href = project.repo;
 
